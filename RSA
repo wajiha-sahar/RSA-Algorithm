@@ -1,0 +1,83 @@
+#include<iostream> 
+#include <numeric> 
+#include<string> 
+#include <cmath> 
+#include <math.h> 
+using namespace std; 
+class RSA 
+{ 
+private: 
+int p; 
+int q; 
+int n;
+int e; 
+double d; 
+unsigned phi_n; 
+public: 
+void take_input(); 
+int calculate_n(); 
+unsigned calculate_phi_n(); 
+int calculate_e(); 
+int calculate_d(); 
+}; 
+void RSA :: take_input() 
+{ 
+ cout<<"Enter 1st Prime Number: ";  cin>>p; 
+ cout<<"Enter 2nd Prime Number: ";  cin>>q; 
+} 
+int RSA :: calculate_n() 
+{ 
+n = p*q; 
+return n; 
+} 
+unsigned RSA :: calculate_phi_n() { 
+phi_n = (p-1) * (q-1); 
+return phi_n; 
+} 
+int RSA :: calculate_e() 
+{ 
+//1 < e > phi_n 
+ unsigned i = 2; 
+while ( gcd(i,phi_n) != 1) 
+i++; 
+e=i; 
+if (e >= phi_n) 
+return 0;
+else 
+return e; 
+} 
+int RSA :: calculate_d() 
+{  
+unsigned k =1; 
+ while(((k*phi_n)+1) % e != 0) 
+k++; 
+ d = ((k*phi_n)+1)/e; 
+ return d; 
+} 
+int main() 
+{ 
+RSA rsa; 
+rsa.take_input(); 
+rsa.calculate_n(); 
+rsa.calculate_phi_n(); 
+rsa.calculate_e(); 
+rsa.calculate_d(); 
+int plain_text; 
+cout<< "Enter Original Message Number: "; cin>>plain_text; 
+cout<<"\n"<<"n = "<<rsa.calculate_n(); cout<<"\n"<<"phi = "<<rsa.calculate_phi_n(); cout<<"\n"<<"e = "<<rsa.calculate_e(); cout<<"\n"<<"d = "<<rsa.calculate_d();  int enc,power; 
+cout<<"\n-----------Encryption-----------\n";  if(plain_text < (rsa.calculate_n())) 
+{ 
+ power = pow(plain_text,rsa.calculate_e());  enc = power % rsa.calculate_n(); 
+ cout<<enc; 
+} 
+else 
+cout<<"erorr"; 
+int dec; 
+cout<<"\n-----------Decryption-----------\n"; power = pow(enc,rsa.calculate_d());
+13 | Page 
+RSA: A PUBLIC KEY CRYPTOSYSTEM FOR SECURE DATA TRANSMISSION 
+dec = power % rsa.calculate_n(); 
+cout<<dec; 
+system("pause"); 
+return 0; 
+} 
