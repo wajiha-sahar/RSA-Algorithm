@@ -74,8 +74,6 @@ else
 cout<<"erorr"; 
 int dec; 
 cout<<"\n-----------Decryption-----------\n"; power = pow(enc,rsa.calculate_d());
-13 | Page 
-RSA: A PUBLIC KEY CRYPTOSYSTEM FOR SECURE DATA TRANSMISSION 
 dec = power % rsa.calculate_n(); 
 cout<<dec; 
 system("pause"); 
